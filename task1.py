@@ -12,6 +12,7 @@ def is_prime(n):
 
 
 def add_user():
+    file = open('user_credentials.txt', 'a+')
     for i in range(5, 1001):
         username = "task1-usr" + str(i)
         password = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
@@ -24,9 +25,8 @@ def add_user():
                 f.write("AllowUsers " + username + "\n")
         if is_prime(i):
             subprocess.run(['chage', '-E0', username])
-        file = open('user_credentials.txt', 'a+')
-        file.write(username+"  "+password)
-        file.close()
+        file.write(username + "  " + password + "\n")
+    file.close()
     subprocess.run(['systemctl restart vsftpd'])
     subprocess.run(['systemctl restart sshd'])
 
