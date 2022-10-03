@@ -33,7 +33,7 @@ def add_user():
             # with open("/etc/ssh/sshd_config", "a") as f:
             # f.write("AllowUsers " + username + "\n")
         if is_prime(i):
-            subprocess.run(['useradd', '-p', password, username])
+            #subprocess.run(['useradd', '-p', password, username])
             subprocess.run(['chage', '-E0', username])
         file.write(username + "  " + password + "\n")
     file.close()
