@@ -16,29 +16,35 @@ def add_user():
     ssh_group = "task1-ssh-group"
     ftp_group = "task1-ftp-group"
     ftp_com_drc = "/home/ftp-docs"
-    subprocess.run(['groupadd', ssh_group])
-    subprocess.run(['groupadd', ftp_group])
-    subprocess.run(['mkdir', ftp_com_drc])
-    #subprocess.run(['chmod', '750', ftp_com_drc])
-    #subprocess.run(['chown', 'root:task1-ftp-group', ftp_com_drc])
-    for i in range(1, 1000):
+    subprocess.run(['sudo', 'addgroup', ssh_group])
+    subprocess.run(['sudo', 'addgroup', ftp_group])
+    # subprocess.run(['mkdir', ftp_com_drc])
+    # subprocess.run(['chmod', '750', ftp_com_drc])
+    # subprocess.run(['chown', 'root:task1-ftp-group', ftp_com_drc])
+    for i in range(1001, 1005):
         username = "user" + str(i)
         password = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
+        subprocess.run(['sudo', 'adduser', username, '--gecos "First Last,RoomNumber,WorkPhone,HomePhone"', '--disabled-password'])
+        userpass = "".join(username + ":" + password)
+        subprocess.run(['echo', userpass, '| sudo', password])
         if i % 2 == 0:
-            subprocess.run(['useradd', '-p', password, '-d', ftp_com_drc, username])
-            with open("/etc/vsftpd/user_list", "a") as f:
-                f.write(username + "\n")
+            subprocess.run(['sudo adduser', username, ftp_group])
+            # subprocess.run(['useradd', '-p', password, '-d', ftp_com_drc, username])
+            # with open("/etc/vsftpd/user_list", "a") as f:
+            # f.write(username + "\n")
         else:
-            subprocess.run(['useradd', '-p', password, '-g', ssh_group, username])
+            subprocess.run(['sudo adduser', username, ssh_group])
+            #subprocess.run(['useradd', '-p', password, '-g', ssh_group, username])
             # with open("/etc/ssh/sshd_config", "a") as f:
             # f.write("AllowUsers " + username + "\n")
         if is_prime(i):
-            #subprocess.run(['useradd', '-p', password, username])
-            subprocess.run(['chage', '-E0', username])
+            # subprocess.run(['useradd', '-p', password, username])
+            subprocess.run(['sudo usermod', '-L', username])
         file.write(username + "  " + password + "\n")
+        print("user" + str(i) + " Created............")
     file.close()
-    #subprocess.run(['chmod', '740', ftp_com_drc + "/*"])
-    #subprocess.run(['chown', 'root:task1-ftp-group', ftp_com_drc + "/*"])
+    # subprocess.run(['chmod', '740', ftp_com_drc + "/*"])
+    # subprocess.run(['chown', 'root:task1-ftp-group', ftp_com_drc + "/*"])
     subprocess.run(['systemctl restart vsftpd'])
     subprocess.run(['systemctl restart sshd'])
 
