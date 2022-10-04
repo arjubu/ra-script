@@ -21,14 +21,14 @@ def add_user():
     # subprocess.run(['mkdir', ftp_com_drc])
     # subprocess.run(['chmod', '750', ftp_com_drc])
     # subprocess.run(['chown', 'root:task1-ftp-group', ftp_com_drc])
-    for i in range(1001, 1005):
+    for i in range(1006, 1009):
         username = "user" + str(i)
         password = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
         adduserstr = 'sudo adduser ' + username + ' --gecos ' + '"' + "First Last,RoomNumber,WorkPhone,HomePhone" + '"' + " --disabled-password "
         print(adduserstr)
         subprocess.Popen(adduserstr, universal_newlines=True, shell=True,
                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        userpass = "echo " + '"' + username + ':' + password + '" | sudo ' + password
+        userpass = "echo " + '"' + username + ':' + password + '" | sudo chpasswd'
         print(userpass)
         subprocess.Popen(userpass, universal_newlines=True, shell=True,
                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
