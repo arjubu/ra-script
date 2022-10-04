@@ -57,7 +57,7 @@ def add_user():
             # subprocess.run(['sudo usermod', '-L', username])
         file.write(username + "  " + password + "\n")
         print("user" + str(i) + " Created............")
-     file.close()
+    file.close()
     # subprocess.run(['chmod', '740', ftp_com_drc + "/*"])
     # subprocess.run(['chown', 'root:task1-ftp-group', ftp_com_drc + "/*"])
     subprocess.run(['systemctl restart vsftpd'])
