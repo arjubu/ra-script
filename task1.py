@@ -60,8 +60,8 @@ def add_user():
     file.close()
     # subprocess.run(['chmod', '740', ftp_com_drc + "/*"])
     # subprocess.run(['chown', 'root:task1-ftp-group', ftp_com_drc + "/*"])
-    subprocess.run(['systemctl restart vsftpd'])
-    subprocess.run(['systemctl restart sshd'])
+    #subprocess.run(['systemctl restart vsftpd'])
+    subprocess.run(['systemctl restart ssh'])
 
 
 add_user()
