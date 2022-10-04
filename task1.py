@@ -19,7 +19,7 @@ def add_user():
     # subprocess.run(['sudo', 'addgroup', ssh_group])
     # subprocess.run(['sudo', 'addgroup', ftp_group])
 
-    for i in range(1009, 1012):
+    for i in range(0, 1001):
         username = "user" + str(i)
         password = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
         adduserstr = 'sudo adduser ' + username + ' --gecos ' + '"' + "First Last,RoomNumber,WorkPhone,HomePhone" + '"' + " --disabled-password "
